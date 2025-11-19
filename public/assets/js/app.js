@@ -66,14 +66,14 @@ const projectsData = [{
     url: 'https://wa.me/6285923507120?text=Type%20.menu%20to%20start%20a%20conversation'
 }, {
     img: 'https://files.catbox.moe/20skww.png',
-    title: 'Arceo Pixeli',
-    desc: 'Arceo Pixeli: Improve your image quality to be better',
-    url: 'https://pixeli.arceo.qzz.io/'
-},  {
-    img: 'https://files.catbox.moe/20skww.png',
     title: 'Arceo Nime (Coming Soon)',
     desc: 'Arceo Nime: The most complete and free anime streaming place',
     url: 'https://nime.arceo.qzz.io/'
+}, {
+    img: 'https://files.catbox.moe/20skww.png',
+    title: 'Arceo Pixeli',
+    desc: 'Arceo Pixeli: Improve your image quality to be better',
+    url: 'https://pixeli.arceo.qzz.io/'
 }];
 
 function animate_percentage(element, targetPercentage, duration = 1000) {

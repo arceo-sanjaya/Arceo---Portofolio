@@ -176,4 +176,3 @@ footer .copyright { font-size: 0.85em; color: #aaa; margin-top: 20px; padding-to
 @media (min-width: 769px) and (max-width: 900px) { .skills-grid.static { grid-template-columns: repeat(3, 1fr); max-width: 725px; } }
 @media (max-width: 480px) { .built-with-item-list { grid-template-columns: repeat(3, 1fr); gap: 15px; } }
 html { scroll-behavior: smooth; }
-       

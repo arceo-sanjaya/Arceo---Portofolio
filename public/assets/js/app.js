@@ -76,6 +76,17 @@ const projectsData = [{
     url: 'https://pixeli.arceo.qzz.io/'
 }];
 
+let modal = null;
+let modalImg = null;
+let modalClose = null;
+
+function openImageModal(src) {
+    if (modal && modalImg) {
+        modal.style.display = "block";
+        modalImg.src = src;
+    }
+}
+
 function animate_percentage(element, targetPercentage, duration = 1000) {
     let startTime = null;
 
@@ -126,9 +137,26 @@ function render_projects(projects) {
     projects.forEach(project => {
         const projectItem = document.createElement('div');
         projectItem.classList.add('project-item');
+
+        const projectImgContainer = document.createElement('div');
+        projectImgContainer.classList.add('project-img-container');
+
         const projectImg = document.createElement('img');
-        projectImg.src = "../assets/img/" + project.img;
+        const imgPath = "../assets/img/" + project.img;
+        projectImg.src = imgPath;
         projectImg.alt = project.title;
+
+        const zoomIcon = document.createElement('div');
+        zoomIcon.classList.add('zoom-icon');
+        zoomIcon.innerHTML = '<i class="fas fa-expand"></i>';
+
+        projectImgContainer.addEventListener('click', () => {
+            openImageModal(imgPath);
+        });
+
+        projectImgContainer.appendChild(projectImg);
+        projectImgContainer.appendChild(zoomIcon);
+
         const projectInfo = document.createElement('div');
         projectInfo.classList.add('project-info');
         const projectTitle = document.createElement('h3');
@@ -148,7 +176,8 @@ function render_projects(projects) {
         projectInfo.appendChild(projectTitle);
         projectInfo.appendChild(projectDescription);
         projectInfo.appendChild(projectLinks);
-        projectItem.appendChild(projectImg);
+
+        projectItem.appendChild(projectImgContainer);
         projectItem.appendChild(projectInfo);
         projectsGrid.appendChild(projectItem);
     });
@@ -181,6 +210,24 @@ document.addEventListener('DOMContentLoaded', () => {
     render_skills(dataSkills, '.skills-grid.main-skills');
     render_skills(dataSkills2, '.skills-grid.academic-skills');
     render_projects(projectsData);
+
+    modal = document.getElementById("imageModal");
+    modalImg = document.getElementById("modalImg");
+    modalClose = document.querySelector(".modal-close");
+
+    if (modalClose) {
+        modalClose.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
+    if (modal) {
+        modal.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
     const skillItems = document.querySelectorAll('#skills .skill-item');
     const observerOptions = {
         root: null,

@@ -60,17 +60,17 @@ const dataSkills2 = [{
 }];
 
 const projectsData = [{
-    img: 'https://files.catbox.moe/20skww.png',
+    img: '__arceo_bot.png',
     title: 'Arceo Bot',
     desc: 'Arceo Bot: A simple WhatsApp bot assistant that can make your needs easier',
     url: 'https://wa.me/6285923507120?text=Type%20.menu%20to%20start%20a%20conversation'
 }, {
-    img: 'https://files.catbox.moe/20skww.png',
+    img: '__arceo_nime.png',
     title: 'Arceo Nime (Coming Soon)',
     desc: 'Arceo Nime: The most complete and free anime streaming place',
     url: 'https://nime.arceo.qzz.io/'
 }, {
-    img: 'https://files.catbox.moe/20skww.png',
+    img: '__arceo_pixeli.png',
     title: 'Arceo Pixeli',
     desc: 'Arceo Pixeli: Improve your image quality to be better',
     url: 'https://pixeli.arceo.qzz.io/'
@@ -127,7 +127,7 @@ function render_projects(projects) {
         const projectItem = document.createElement('div');
         projectItem.classList.add('project-item');
         const projectImg = document.createElement('img');
-        projectImg.src = project.img;
+        projectImg.src = "../assets/img/" + project.img;
         projectImg.alt = project.title;
         const projectInfo = document.createElement('div');
         projectInfo.classList.add('project-info');

@@ -2,8 +2,8 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 const navLinksItems = document.querySelectorAll('.nav-links a');
 const backToTopBtn = document.getElementById('backToTop');
-const imageModal = document.getElementById('imageModal');
-const modalImage = imageModal.querySelector('.modal-image');
+const imageModal = document.getElementById('image-modal');
+const modalImage = document.getElementById('modal-image');
 
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
@@ -31,11 +31,6 @@ window.addEventListener('scroll', () => {
 
 backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-imageModal.addEventListener('click', () => {
-    imageModal.style.display = 'none';
-    modalImage.src = '';
 });
 
 const dataSkills = [{
@@ -133,29 +128,9 @@ function render_projects(projects) {
     projects.forEach(project => {
         const projectItem = document.createElement('div');
         projectItem.classList.add('project-item');
-
-        const projectImageContainer = document.createElement('div');
-        projectImageContainer.classList.add('project-image-container');
-
         const projectImg = document.createElement('img');
         projectImg.src = "../assets/img/" + project.img;
         projectImg.alt = project.title;
-        projectImg.style.cursor = 'pointer';
-
-        const watermarkImg = document.createElement('img');
-        watermarkImg.src = "../assets/img/__arceo.png";
-        watermarkImg.alt = "Watermark";
-        watermarkImg.classList.add('project-watermark');
-
-        projectImg.addEventListener('click', (e) => {
-            e.stopPropagation();
-            modalImage.src = projectImg.src;
-            imageModal.style.display = 'flex';
-        });
-
-        projectImageContainer.appendChild(projectImg);
-        projectImageContainer.appendChild(watermarkImg);
-
         const projectInfo = document.createElement('div');
         projectInfo.classList.add('project-info');
         const projectTitle = document.createElement('h3');
@@ -175,7 +150,7 @@ function render_projects(projects) {
         projectInfo.appendChild(projectTitle);
         projectInfo.appendChild(projectDescription);
         projectInfo.appendChild(projectLinks);
-        projectItem.appendChild(projectImageContainer);
+        projectItem.appendChild(projectImg);
         projectItem.appendChild(projectInfo);
         projectsGrid.appendChild(projectItem);
     });
@@ -236,6 +211,24 @@ document.addEventListener('DOMContentLoaded', () => {
         textContent = typing_element.textContent.trim();
         typing_element.textContent = '';
         type_effect();
+    }
+    
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (projectsGrid) {
+        projectsGrid.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') {
+                modalImage.src = e.target.src;
+                imageModal.classList.add('active');
+            }
+        });
+    }
+
+    if (imageModal) {
+        imageModal.addEventListener('click', (e) => {
+            if (e.target === imageModal) {
+                imageModal.classList.remove('active');
+            }
+        });
     }
 });
 

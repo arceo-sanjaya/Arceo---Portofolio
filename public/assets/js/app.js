@@ -2,6 +2,8 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 const navLinksItems = document.querySelectorAll('.nav-links a');
 const backToTopBtn = document.getElementById('backToTop');
+const imageModal = document.getElementById('imageModal');
+const modalImage = imageModal.querySelector('.modal-image');
 
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
@@ -29,6 +31,11 @@ window.addEventListener('scroll', () => {
 
 backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+imageModal.addEventListener('click', () => {
+    imageModal.style.display = 'none';
+    modalImage.src = '';
 });
 
 const dataSkills = [{
@@ -75,17 +82,6 @@ const projectsData = [{
     desc: 'Arceo Pixeli: Improve your image quality to be better',
     url: 'https://pixeli.arceo.qzz.io/'
 }];
-
-let modal = null;
-let modalImg = null;
-let modalClose = null;
-
-function openImageModal(src) {
-    if (modal && modalImg) {
-        modal.style.display = "block";
-        modalImg.src = src;
-    }
-}
 
 function animate_percentage(element, targetPercentage, duration = 1000) {
     let startTime = null;
@@ -138,24 +134,27 @@ function render_projects(projects) {
         const projectItem = document.createElement('div');
         projectItem.classList.add('project-item');
 
-        const projectImgContainer = document.createElement('div');
-        projectImgContainer.classList.add('project-img-container');
+        const projectImageContainer = document.createElement('div');
+        projectImageContainer.classList.add('project-image-container');
 
         const projectImg = document.createElement('img');
-        const imgPath = "../assets/img/" + project.img;
-        projectImg.src = imgPath;
+        projectImg.src = "../assets/img/" + project.img;
         projectImg.alt = project.title;
+        projectImg.style.cursor = 'pointer';
 
-        const zoomIcon = document.createElement('div');
-        zoomIcon.classList.add('zoom-icon');
-        zoomIcon.innerHTML = '<i class="fas fa-expand"></i>';
+        const watermarkImg = document.createElement('img');
+        watermarkImg.src = "../assets/img/__arceo.png";
+        watermarkImg.alt = "Watermark";
+        watermarkImg.classList.add('project-watermark');
 
-        projectImgContainer.addEventListener('click', () => {
-            openImageModal(imgPath);
+        projectImg.addEventListener('click', (e) => {
+            e.stopPropagation();
+            modalImage.src = projectImg.src;
+            imageModal.style.display = 'flex';
         });
 
-        projectImgContainer.appendChild(projectImg);
-        projectImgContainer.appendChild(zoomIcon);
+        projectImageContainer.appendChild(projectImg);
+        projectImageContainer.appendChild(watermarkImg);
 
         const projectInfo = document.createElement('div');
         projectInfo.classList.add('project-info');
@@ -176,8 +175,7 @@ function render_projects(projects) {
         projectInfo.appendChild(projectTitle);
         projectInfo.appendChild(projectDescription);
         projectInfo.appendChild(projectLinks);
-
-        projectItem.appendChild(projectImgContainer);
+        projectItem.appendChild(projectImageContainer);
         projectItem.appendChild(projectInfo);
         projectsGrid.appendChild(projectItem);
     });
@@ -210,24 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
     render_skills(dataSkills, '.skills-grid.main-skills');
     render_skills(dataSkills2, '.skills-grid.academic-skills');
     render_projects(projectsData);
-
-    modal = document.getElementById("imageModal");
-    modalImg = document.getElementById("modalImg");
-    modalClose = document.querySelector(".modal-close");
-
-    if (modalClose) {
-        modalClose.onclick = function() {
-            modal.style.display = "none";
-        }
-    }
-    if (modal) {
-        modal.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    }
-
     const skillItems = document.querySelectorAll('#skills .skill-item');
     const observerOptions = {
         root: null,

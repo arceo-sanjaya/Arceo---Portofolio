@@ -2,8 +2,6 @@ const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 const navLinksItems = document.querySelectorAll('.nav-links a');
 const backToTopBtn = document.getElementById('backToTop');
-const imageModal = document.getElementById('image-modal');
-const modalImage = document.getElementById('modal-image');
 
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
@@ -183,6 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
     render_skills(dataSkills, '.skills-grid.main-skills');
     render_skills(dataSkills2, '.skills-grid.academic-skills');
     render_projects(projectsData);
+
+    const modalOverlay = document.getElementById('imageModal');
+    const modalImage = modalOverlay.querySelector('.modal-content');
+    const projectImages = document.querySelectorAll('.projects-grid .project-item img');
+
+    projectImages.forEach(img => {
+        img.addEventListener('click', () => {
+            modalImage.src = img.src;
+            modalImage.alt = img.alt + ' Preview';
+            modalOverlay.classList.add('active');
+        });
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.classList.remove('active');
+        }
+    });
+
     const skillItems = document.querySelectorAll('#skills .skill-item');
     const observerOptions = {
         root: null,
@@ -211,24 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
         textContent = typing_element.textContent.trim();
         typing_element.textContent = '';
         type_effect();
-    }
-    
-    const projectsGrid = document.querySelector('.projects-grid');
-    if (projectsGrid) {
-        projectsGrid.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG') {
-                modalImage.src = e.target.src;
-                imageModal.classList.add('active');
-            }
-        });
-    }
-
-    if (imageModal) {
-        imageModal.addEventListener('click', (e) => {
-            if (e.target === imageModal) {
-                imageModal.classList.remove('active');
-            }
-        });
     }
 });
 
